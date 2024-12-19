@@ -1,101 +1,147 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { FiDollarSign, FiBriefcase, FiBook, FiList, FiCreditCard, FiGrid, FiPieChart } from "react-icons/fi"
+
+interface CardProps {
+  title: string
+  addHref: string
+  viewHref: string
+  icon: React.ReactNode
+  color: string
+}
+
+function Card({ title, addHref, viewHref, icon, color }: CardProps) {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col space-y-4 border border-gray-700 relative overflow-hidden"
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-700 to-gray-600 opacity-50"></div>
+      <div className={`text-4xl ${color} relative z-10 mb-2`}>
+        <div className="absolute inset-0 bg-gradient-to-r from-current to-transparent opacity-50 blur-lg"></div>
+        {icon}
+      </div>
+      <h3 className="text-xl font-semibold text-white relative z-10">{title}</h3>
+      <div className="flex space-x-4 relative z-10">
+        <Link
+          href={addHref}
+          className={`flex-1 ${color.replace('text-', 'bg-')} text-white py-2 px-4 rounded-lg hover:opacity-90 transition-opacity text-center`}
+        >
+          Add New
+        </Link>
+        <Link
+          href={viewHref}
+          className={`flex-1 bg-gray-700 ${color} py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors text-center`}
+        >
+          View
+        </Link>
+      </div>
+    </motion.div>
+  )
+}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+export default function HomePage() {
+  const cards = [
+    {
+      title: "Transactions",
+      addHref: "/transactions/new",
+      viewHref: "/transactions",
+      icon: <FiDollarSign />,
+      color: "text-green-500",
+    },
+    {
+      title: "Business",
+      addHref: "/business/new",
+      viewHref: "/business",
+      icon: <FiBriefcase />,
+      color: "text-blue-500",
+    },
+    {
+      title: "Ledger",
+      addHref: "/ledger/new",
+      viewHref: "/ledger",
+      icon: <FiBook />,
+      color: "text-yellow-500",
+    },
+    {
+      title: "Head",
+      addHref: "/head/new",
+      viewHref: "/head",
+      icon: <FiList />,
+      color: "text-purple-500",
+    },
+    {
+      title: "Mode",
+      addHref: "/mode/new",
+      viewHref: "/mode",
+      icon: <FiCreditCard />,
+      color: "text-pink-500",
+    },
+    {
+      title: "Type",
+      addHref: "/type/new",
+      viewHref: "/type",
+      icon: <FiGrid />,
+      color: "text-indigo-500",
+    },
+    {
+      title: "Reports",
+      addHref: "/reports/new",
+      viewHref: "/reports",
+      icon: <FiPieChart />,
+      color: "text-red-500",
+    },
+  ]
+
+  return (
+    <div className="min-h-screen bg-black">
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl font-bold text-white mb-4 relative inline-block"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <span className="relative z-10">Baby Accounts</span>
+            <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-75 blur-sm animate-pulse"></span>
+          </motion.h1>
+          <div className="h-1 w-20 bg-blue-600 mx-auto rounded-full"></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {cards.map((card, index) => (
+            <motion.div
+              key={card.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Card
+                title={card.title}
+                addHref={card.addHref}
+                viewHref={card.viewHref}
+                icon={card.icon}
+                color={card.color}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+      <style jsx global>{`
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: .5;
+          }
+        }
+        .animate-pulse {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+      `}</style>
     </div>
-  );
+  )
 }
